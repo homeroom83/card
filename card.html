@@ -55,7 +55,7 @@
       backface-visibility: hidden;
     }
 
-    /* .card-back {
+    .card-back {
       width: 100%;
       height: 100%;
       background-image: url(./sneakers.png);
@@ -64,9 +64,15 @@
       background-position: center;
       background-color: white;
       filter: invert(100%);
+      transform: rotateY(180deg);
+
       position: absolute;
       backface-visibility: hidden;
-    } */
+    }
+
+    .card-close {
+      transform: rotateY(180deg);
+    }
 
     .ootd {
       width: 60%;
@@ -97,11 +103,47 @@
       $(this).attr('data-number', number)
     })
 
-    for (let i = 0; i < 20; i++) {
-      const randomA = Math.round(Math.random() * 15)
-      const randomB = Math.round(Math.random() * 15)
+    for (let i = 0; i < 50; i++) {
+      const randomA = Math.round(Math.random() * 11)
+      const randomB = Math.round(Math.random() * 11)
       $('.card').eq(randomA).insertAfter($('.card').eq(randomB))
     }
+
+    $('.cards').on('click', '.card', function () {
+      if (
+        // .card 沒有 .card-close 代表被翻開
+        // 如果已翻開數小於兩張
+        $('.card:not(.card-close)').length < 2 &&
+        // 且這張牌還沒翻開
+        $(this).hasClass('card-close') &&
+        // 這張牌還沒配對
+        !$(this).hasClass('card-ok')
+      ) {
+        $(this).removeClass('card-close')
+      }
+
+
+      // 如果翻開兩張了
+      if ($('.card:not(.card-close)').length === 2) {
+        // 如果兩張是一樣的
+        if (
+          $('.card:not(.card-close)').eq(0).attr('data-number') ===
+          $('.card:not(.card-close)').eq(1).attr('data-number')
+        ) {
+          $('.card:not(.card-close)').addClass('card-ok')
+          $('.card:not(.card-close)').fadeTo(1000, 0)
+        }
+        setTimeout(function () {
+          // 翻回來
+          $('.card:not(.card-close)').addClass('card-close')
+          // 過關判斷
+          if ($('.card-ok').length === $('.card').length) {
+            alert('過關')
+          }
+        }, 1000)
+      }
+
+    })
 
   </script>
 </body>
