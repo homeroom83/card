@@ -42,6 +42,7 @@
       transform-style: preserve-3d;
       transition: transform 1s;
       border: 1px solid black;
+      border-radius: 10px;
     }
 
     .card-front {
@@ -53,30 +54,87 @@
       background-position: center;
       position: absolute;
       backface-visibility: hidden;
+      border-radius: 10px;
+
     }
 
     .card-back {
       width: 100%;
       height: 100%;
-      background-image: url(./sneakers.png);
+      /* background-image: url(./sneakers.png);
       background-size: contain;
       background-repeat: no-repeat;
       background-position: center;
       background-color: white;
       filter: invert(100%);
       transform: rotateY(180deg);
-
+      border-radius: 10px;
       position: absolute;
       backface-visibility: hidden;
     }
 
     .card-close {
-      transform: rotateY(180deg);
+      transform: rotateY(180deg); */
     }
 
     .ootd {
       width: 60%;
-      height: 800px;
+      height: 900px;
+      display: flex;
+      flex-direction: column;
+      padding: 25px 10px 0 10px;
+      box-sizing: border-box;
+    }
+
+    .ootd-big {
+      width: 90%;
+      height: 70%;
+      margin: 1rem auto;
+      text-align: center;
+      display: none;
+    }
+
+    .photo {
+      height: 100%;
+    }
+
+
+    .photo img {
+      height: 100%;
+    }
+
+    .ootd .button {
+      width: 100%;
+      height: 8%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+    }
+
+    .ootd .button button {
+      width: 50px;
+      height: 50px;
+      margin: 0 1rem;
+    }
+
+    .ootd-small {
+      width: 100%;
+      height: 15%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .ootd-small img {
+      height: 80%;
+      border: 1px solid grey;
+      opacity: 0;
+    }
+
+    .ootd-small img:hover {
+      border: 2px solid red;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -84,10 +142,57 @@
 <body>
   <div class="game">
     <div class="cards"></div>
-    <div class="ootd"></div>
+    <div class="ootd">
+      <div class="ootd-big">
+        <!-- 第一個 birkenstock 的 ootd -->
+        <div class="ootd-big1 photo">
+          <img src="./birkenstock/bk-ootd1.webp">
+        </div>
+
+        <!-- 第二個 converse 的 ootd -->
+        <div class="ootd-big2 photo">
+          <img src="./converse/converse-ootd1.webp">
+        </div>
+
+        <!-- 第三個 hunter 的 ootd -->
+        <div class="ootd-big3 photo">
+          <img src="./hunter/hunter-ootd1.webp">
+        </div>
+
+        <!-- 第四個 jordan 的 ootd -->
+        <div class="ootd-big4 photo">
+          <img src="./jordan/jordan-ootd1.webp">
+        </div>
+
+        <!-- 第五個 martens 的 ootd -->
+        <div class="ootd-big5 photo">
+          <img src="./martens/martens-ootd1.webp">
+        </div>
+
+        <!-- 第六個 newbalance 的 ootd -->
+        <div class="ootd-big6 photo">
+          <img src="./newbalance/NB-ootd1.webp">
+        </div>
+
+
+      </div>
+      <div class="button">
+        <button value="1">&larr;</button>
+        <button value="-1">&rarr;</button>
+      </div>
+      <div class="ootd-small">
+        <img src="./shoes/shoe1.webp" class="ootd-small-1 ootd-smallImg">
+        <img src="./shoes/shoe2.webp" class="ootd-small-2 ootd-smallImg">
+        <img src="./shoes/shoe3.webp" class="ootd-small-3 ootd-smallImg">
+        <img src="./shoes/shoe4.webp" class="ootd-small-4 ootd-smallImg">
+        <img src="./shoes/shoe5.webp" class="ootd-small-5 ootd-smallImg">
+        <img src="./shoes/shoe6.webp" class="ootd-small-6 ootd-smallImg">
+      </div>
+    </div>
   </div>
 
   <script>
+    // 做出 12 張牌
     for (let i = 0; i < 12; i++) {
       $('.cards').append(`
       <div class="card card-close">
@@ -122,7 +227,6 @@
         $(this).removeClass('card-close')
       }
 
-
       // 如果翻開兩張了
       if ($('.card:not(.card-close)').length === 2) {
         // 如果兩張是一樣的
@@ -131,20 +235,35 @@
           $('.card:not(.card-close)').eq(1).attr('data-number')
         ) {
           $('.card:not(.card-close)').addClass('card-ok')
-          $('.card:not(.card-close)').fadeTo(1000, 0)
+          $('.card:not(.card-close)').fadeTo(1300, 0)
+          const num = $('.card:not(.card-close)').eq(0).attr('data-number')
+          $('.ootd-smallImg').eq(num - 1).css('opacity', '1')
+          $('.button').css('opacity', '1')
+          $('.ootd-big').css('display', 'block')
+          $('.photo').each(() => {
+            $('.photo').css('display', 'none')
+            $('.photo').eq(num - 1).css('display', 'block')
+          })
         }
         setTimeout(function () {
           // 翻回來
           $('.card:not(.card-close)').addClass('card-close')
-          // 過關判斷
-          if ($('.card-ok').length === $('.card').length) {
-            alert('過關')
-          }
         }, 1000)
       }
-
     })
 
+    $('.ootd-smallImg').each((index, img) => {
+      $(img).on('click', () => {
+        $('.photo').css('display', 'none')
+        $('.photo').eq(index).css('display', 'block')
+      })
+    })
+
+    $('.button').each((index, btn) => {
+      $(btn).on('click', () => {
+
+      })
+    })
   </script>
 </body>
 
