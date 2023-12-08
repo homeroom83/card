@@ -96,6 +96,7 @@
 
     .photo {
       height: 100%;
+      display: none;
     }
 
 
@@ -103,7 +104,7 @@
       height: 100%;
     }
 
-    .ootd .button {
+    .ootd .buttonbox {
       width: 100%;
       height: 8%;
       display: flex;
@@ -112,7 +113,7 @@
       opacity: 0;
     }
 
-    .ootd .button button {
+    .ootd .buttonbox .button {
       width: 50px;
       height: 50px;
       margin: 0 1rem;
@@ -128,8 +129,9 @@
 
     .ootd-small img {
       height: 80%;
-      border: 1px solid grey;
+      border: 2px solid #E0E0E0;
       opacity: 0;
+      table-layout: fixed;
     }
 
     .ootd-small img:hover {
@@ -146,47 +148,47 @@
       <div class="ootd-big">
         <!-- 第一個 birkenstock 的 ootd -->
         <div class="ootd-big1 photo">
-          <img src="./birkenstock/bk-ootd1.webp">
+          <img src="./birkenstock/bk-ootd1.webp" class="img">
         </div>
 
         <!-- 第二個 converse 的 ootd -->
         <div class="ootd-big2 photo">
-          <img src="./converse/converse-ootd1.webp">
+          <img src="./converse/converse-ootd1.webp" class="img">
         </div>
 
         <!-- 第三個 hunter 的 ootd -->
         <div class="ootd-big3 photo">
-          <img src="./hunter/hunter-ootd1.webp">
+          <img src="./hunter/hunter-ootd1.webp" class="img">
         </div>
 
         <!-- 第四個 jordan 的 ootd -->
         <div class="ootd-big4 photo">
-          <img src="./jordan/jordan-ootd1.webp">
+          <img src="./jordan/jordan-ootd1.webp" class="img">
         </div>
 
         <!-- 第五個 martens 的 ootd -->
         <div class="ootd-big5 photo">
-          <img src="./martens/martens-ootd1.webp">
+          <img src="./martens/martens-ootd1.webp" class="img">
         </div>
 
         <!-- 第六個 newbalance 的 ootd -->
         <div class="ootd-big6 photo">
-          <img src="./newbalance/NB-ootd1.webp">
+          <img src="./newbalance/NB-ootd1.webp" class="img">
         </div>
 
 
       </div>
-      <div class="button">
-        <button value="1">&larr;</button>
-        <button value="-1">&rarr;</button>
+      <div class="buttonbox">
+        <button value="-1" class="button btn0">&larr;</button>
+        <button value="1" class="button btn1">&rarr;</button>
       </div>
       <div class="ootd-small">
-        <img src="./shoes/shoe1.webp" class="ootd-small-1 ootd-smallImg">
-        <img src="./shoes/shoe2.webp" class="ootd-small-2 ootd-smallImg">
-        <img src="./shoes/shoe3.webp" class="ootd-small-3 ootd-smallImg">
-        <img src="./shoes/shoe4.webp" class="ootd-small-4 ootd-smallImg">
-        <img src="./shoes/shoe5.webp" class="ootd-small-5 ootd-smallImg">
-        <img src="./shoes/shoe6.webp" class="ootd-small-6 ootd-smallImg">
+        <img src="./shoes/shoe1.webp" class="ootd-smallImg">
+        <img src="./shoes/shoe2.webp" class="ootd-smallImg">
+        <img src="./shoes/shoe3.webp" class="ootd-smallImg">
+        <img src="./shoes/shoe4.webp" class="ootd-smallImg">
+        <img src="./shoes/shoe5.webp" class="ootd-smallImg">
+        <img src="./shoes/shoe6.webp" class="ootd-smallImg">
       </div>
     </div>
   </div>
@@ -238,7 +240,7 @@
           $('.card:not(.card-close)').fadeTo(1300, 0)
           const num = $('.card:not(.card-close)').eq(0).attr('data-number')
           $('.ootd-smallImg').eq(num - 1).css('opacity', '1')
-          $('.button').css('opacity', '1')
+          $('.buttonbox').css('opacity', '1')
           $('.ootd-big').css('display', 'block')
           $('.photo').each(() => {
             $('.photo').css('display', 'none')
@@ -250,20 +252,115 @@
           $('.card:not(.card-close)').addClass('card-close')
         }, 1000)
       }
+
+      if ($('.card-ok').length === $('.card').length) {
+        $('.cards').css('display', 'none')
+      }
     })
+
+    let shoes = {
+      bk: [
+        "./birkenstock/bk-ootd1.webp",
+        "./birkenstock/bk-ootd2.webp",
+        "./birkenstock/bk-ootd3.webp",
+        "./birkenstock/bk-ootd4.webp",
+        "./birkenstock/bk-ootd5.webp",
+      ],
+      cv: [
+        "./converse/converse-ootd1.webp",
+        "./converse/converse-ootd2.webp",
+        "./converse/converse-ootd3.webp",
+        "./converse/converse-ootd4.webp",
+        "./converse/converse-ootd5.webp",
+      ],
+      ht: [
+        "./hunter/hunter-ootd1.webp",
+        "./hunter/hunter-ootd2.webp",
+        "./hunter/hunter-ootd3.webp",
+        "./hunter/hunter-ootd4.webp",
+        "./hunter/hunter-ootd5.webp",
+      ]
+
+      // let jd = [
+      //   "./jordan/jordan-ootd1.webp",
+      //   "./jordan/jordan-ootd2.webp",
+      //   "./jordan/jordan-ootd3.webp",
+      //   "./jordan/jordan-ootd4.webp",
+      //   "./jordan/jordan-ootd5.webp",
+      // ]
+
+      // let mt = [
+      //   "./martens/martens-ootd1.webp",
+      //   "./martens/martens-ootd2.webp",
+      //   "./martens/martens-ootd3.webp",
+      //   "./martens/martens-ootd4.webp",
+      //   "./martens/martens-ootd5.webp",
+      // ]
+
+      // let nb = [
+      //   "./newbalance/NB-ootd1.webp",
+      //   "./newbalance/NB-ootd2.webp",
+      //   "./newbalance/NB-ootd3.webp",
+      //   "./newbalance/NB-ootd4.webp",
+      //   "./newbalance/NB-ootd5.webp",
+      // ]
+    }
 
     $('.ootd-smallImg').each((index, img) => {
       $(img).on('click', () => {
         $('.photo').css('display', 'none')
         $('.photo').eq(index).css('display', 'block')
+
+
+        let num = 0
+        function preImg(event) {
+          num--;
+          if (num < 0) {
+            num = 4;
+          }
+        }
+
+        function nextImg(event) {
+          num++;
+          if (num > 4) {
+            num = 0;
+          }
+        }
+
+        if ($('.ootd-big1').css('display') == 'block') {
+          console.log('.ootd-big1:visible')
+          $('.btn0').on('click', () => {
+            preImg()
+            $('.ootd-big1 .img').attr('src', shoes.bk[num])
+          })
+          $('.btn1').on('click', () => {
+            nextImg()
+            $('.ootd-big1 .img').attr('src', shoes.bk[num])
+          })
+        } else if ($('.ootd-big2').css('display') == 'block') {
+          console.log('.ootd-big2:visible')
+          $('.btn0').on('click', () => {
+            preImg()
+            $('.ootd-big2 .img').attr('src', shoes.cv[num])
+            console.log(num)
+          })
+          $('.btn1').on('click', () => {
+            nextImg()
+            $('.ootd-big2 .img').attr('src', shoes.cv[num])
+          })
+        } else if ($('.ootd-big3').css('display') == 'block') {
+          $('.btn0').on('click', () => {
+            preImg()
+            $('.ootd-big3 .img').attr('src', shoes.ht[num])
+          })
+          $('.btn1').on('click', () => {
+            nextImg()
+            $('.ootd-big3 .img').attr('src', shoes.ht[num])
+          })
+        }
       })
     })
 
-    $('.button').each((index, btn) => {
-      $(btn).on('click', () => {
-
-      })
-    })
   </script>
 </body>
 
